@@ -104,3 +104,28 @@ sys_date(void){
   
   return 0;
 }
+
+uint 
+sys_getuid(void){
+  return 0;
+}       
+
+uint 
+sys_getgid(void){
+  return 0;
+}
+
+uint 
+sys_getppid(void){
+  return 0;
+}
+
+int 
+sys_setuid(uint uid){
+  return 1;
+}
+
+int 
+sys_setgid(uint gid){
+  return 1;
+}
