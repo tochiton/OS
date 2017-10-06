@@ -107,25 +107,41 @@ sys_date(void){
 
 uint 
 sys_getuid(void){
-  return 0;
+  return proc->uid;
 }       
 
 uint 
 sys_getgid(void){
-  return 0;
+  return proc->gid;
 }
 
 uint 
 sys_getppid(void){
+  if(proc->pid < 2){
+    return 0;             // check this..not sure what to return since uint    
+  }
+  int parent_id = proc->parent->pid;
+  return parent_id;
+}
+
+int 
+sys_setuid(uint uid){     //should I pass by reference or by value
+  if(uid <0 || uid > 32767){
+    return -1;
+  }
+  acquire(&ptable.lock);
+  proc->uid = uid;
+  release(&ptable.lock);
   return 0;
 }
 
 int 
-sys_setuid(uint uid){
-  return 1;
-}
-
-int 
 sys_setgid(uint gid){
-  return 1;
+  if(uid <0 || uid > 32767){
+    return -1;
+  }
+  acquire(&ptable.lock);
+  proc->gid = gid;
+  release(&ptable.lock);
+  return 0;
 }
