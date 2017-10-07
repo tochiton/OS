@@ -69,6 +69,8 @@ found:
   memset(p->context, 0, sizeof *p->context);
   p->context->eip = (uint)forkret;
   p->start_ticks = ticks;
+  p->cpu_ticks_total =0;
+  p->cpu_ticks_in =0;
   return p;
 }
 
@@ -96,7 +98,7 @@ userinit(void)
 
   safestrcpy(p->name, "initcode", sizeof(p->name));
   p->cwd = namei("/");
-
+  p->parent = p;
   p->state = RUNNABLE;
 }
 
@@ -143,6 +145,8 @@ fork(void)
   np->sz = proc->sz;
   np->parent = proc;
   *np->tf = *proc->tf;
+  np->uid = proc->uid;
+  np->gid = proc->gid;
 
   // Clear %eax so that fork returns 0 in the child.
   np->tf->eax = 0;
@@ -301,6 +305,7 @@ scheduler(void)
       idle = 0;  // not idle this timeslice
       proc = p;
       switchuvm(p);
+      p->cpu_ticks_in = ticks;
       p->state = RUNNING;
       swtch(&cpu->scheduler, proc->context);
       switchkvm();
@@ -343,6 +348,7 @@ sched(void)
   if(readeflags()&FL_IF)
     panic("sched interruptible");
   intena = cpu->intena;
+  proc->cpu_ticks_total += ticks - proc->cpu_ticks_in;
   swtch(&proc->context, cpu->scheduler);
   cpu->intena = intena;
 }

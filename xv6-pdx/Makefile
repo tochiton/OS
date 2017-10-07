@@ -196,6 +196,7 @@ UPROGS=\
 	_usertests\
 	_wc\
 	_zombie\
+	_testuidgid\
 
 UPROGS += $(CS333_UPROGS) $(CS333_TPROGS)
 

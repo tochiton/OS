@@ -117,9 +117,9 @@ sys_getgid(void){
 
 uint 
 sys_getppid(void){
-  if(proc->pid < 2){
-    return 0;             // check this..not sure what to return since uint    
-  }
+//  if(proc->pid < 2){       //check if we need this 
+//    return 0;             // check this..not sure what to return since uint    
+//  }
   int parent_id = proc->parent->pid;
   return parent_id;
 }
@@ -129,19 +129,20 @@ sys_setuid(uint uid){     //should I pass by reference or by value
   if(uid <0 || uid > 32767){
     return -1;
   }
-  acquire(&ptable.lock);
+  //acquire(&ptable.lock);
   proc->uid = uid;
-  release(&ptable.lock);
+  //release(&ptable.lock);
   return 0;
 }
 
 int 
 sys_setgid(uint gid){
-  if(uid <0 || uid > 32767){
+  if(gid <0 || gid > 32767){
     return -1;
   }
-  acquire(&ptable.lock);
+  //acquire(&ptable.lock);
   proc->gid = gid;
-  release(&ptable.lock);
+  //release(&ptable.lock);
   return 0;
 }
+

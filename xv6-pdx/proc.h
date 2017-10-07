@@ -68,6 +68,8 @@ struct proc {
   uint start_ticks;
   uint uid;
   uint gid;
+  uint cpu_ticks_total;
+  uint cpu_ticks_in;
 };
 
 // Process memory is laid out contiguously, low addresses first:

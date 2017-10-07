@@ -33,6 +33,7 @@ uint getppid(void);
 int setuid(uint);
 int setgid(uint);
 
+
 // ulib.c
 int stat(char*, struct stat*);
 char* strcpy(char*, char*);
