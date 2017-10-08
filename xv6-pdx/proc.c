@@ -6,6 +6,7 @@
 #include "x86.h"
 #include "proc.h"
 #include "spinlock.h"
+#include "uproc.h"
 
 struct {
   struct spinlock lock;
@@ -98,8 +99,10 @@ userinit(void)
 
   safestrcpy(p->name, "initcode", sizeof(p->name));
   p->cwd = namei("/");
-  p->parent = p;
+  p->parent = p;            // set up parent
   p->state = RUNNABLE;
+  p->uid = UID;
+  p->gid = GID;
 }
 
 // Grow current process's memory by n bytes.
@@ -493,7 +496,7 @@ static char *states[] = {
   [EMBRYO]    "embryo",
   [SLEEPING]  "sleep ",
   [RUNNABLE]  "runble",
-  [RUNNING]   "run   ",
+  [RUNNING]   "run",
   [ZOMBIE]    "zombie"
 };
 
@@ -536,4 +539,28 @@ procdump(void)
     }
     cprintf("\n");
   }
+}
+
+int
+getprocs(uint max, struct uproc* table){
+  int index = 0;      // which is my count of processes at the same time
+  struct proc *p;
+  
+    acquire(&ptable.lock);
+    for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
+      if(p->state == RUNNABLE || p->state == SLEEPING || p->state == RUNNING){
+        table[index].pid = p -> pid;
+        table[index].uid = p -> uid;
+        table[index].gid = p -> gid;
+        table[index].ppid = p -> parent -> pid;
+        table[index].elapsed_ticks = ticks - p -> start_ticks;
+        table[index].CPU_total_ticks = p -> cpu_ticks_total;
+        safestrcpy(table[index].state, states[p-> state], STRMAX);       // not sure how to do this
+        table[index].size = p -> sz;
+        safestrcpy(table[index].name, p-> name, STRMAX);          // check this as well
+        index++; // after 
+      }
+    }
+    release(&ptable.lock);
+    return index;    
 }

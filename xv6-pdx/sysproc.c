@@ -6,7 +6,7 @@
 #include "memlayout.h"
 #include "mmu.h"
 #include "proc.h"
-
+#include "uproc.h"
 int
 sys_fork(void)
 {
@@ -50,7 +50,7 @@ sys_sbrk(void)
 
   if(argint(0, &n) < 0)// remove this stub once you implement the date() system call.
    return -1;
-  addr = proc->sz;  
+  addr = proc->sz;
   if(growproc(n) < 0)
     return -1;
   return addr;
@@ -115,7 +115,7 @@ sys_getgid(void){
   return proc->gid;
 }
 
-uint 
+uint
 sys_getppid(void){
 //  if(proc->pid < 2){       //check if we need this 
 //    return 0;             // check this..not sure what to return since uint    
@@ -146,3 +146,15 @@ sys_setgid(uint gid){
   return 0;
 }
 
+int 
+sys_getprocs(void){
+  struct uproc *d;
+  int n;
+  
+  if(argint(0, &n) < 0)// remove this stub once you implement the date() system call.
+    return -1;
+
+  if(argptr(1,(void*)&d, sizeof(struct uproc)) < 0)
+    return -1;
+  return getprocs(n, d);
+}
