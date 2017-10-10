@@ -8,7 +8,7 @@ Disassembly of section .text:
 #ifdef CS333_P2
 #include "types.h"
 #include "user.h"
-	int
+int
 main(int argc, char *argv[])
 {
    0:	8d 4c 24 04          	lea    0x4(%esp),%ecx

@@ -1,7 +1,7 @@
 #ifdef CS333_P2
 #include "types.h"
 #include "user.h"
-	int
+int
 main(int argc, char *argv[])
 {
 	// ++argv;
