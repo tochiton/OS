@@ -515,7 +515,7 @@ procdump(void)
   int milliseconds;
   int temp;
    
-  cprintf("PID\tState\tName\tElapsed\t PCs\n");
+  cprintf("PID\tState\tName\tUID\tGID\tPPID\tCPU\tSIZE\tElapsed\t PCs\n");
   for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
     if(p->state == UNUSED)
       continue;
@@ -530,8 +530,9 @@ procdump(void)
       milliseconds = time_difference/100;
       time_difference -= milliseconds *100;
       temp = (time_difference)/10;
-      time_difference -= temp * 10;  
-    cprintf("%d\t%s\t%s\t%d.%d%d%d\t", p->pid, state, p->name, seconds, milliseconds,temp,time_difference);
+      time_difference -= temp * 10; 
+      	 
+    cprintf("%d\t%s\t%s\t%d\t%d\t%d\t%d\t%d\t%d.%d%d%d\t", p->pid, state, p->name, p-> uid, p->gid, p->parent->pid, p->cpu_ticks_total, p->sz, seconds, milliseconds,temp,time_difference);
     if(p->state == SLEEPING){
       getcallerpcs((uint*)p->context->ebp+2, pc);
       for(i=0; i<10 && pc[i] != 0; i++)
@@ -555,9 +556,9 @@ getprocs(uint max, struct uproc* table){
         table[index].ppid = p -> parent -> pid;
         table[index].elapsed_ticks = ticks - p -> start_ticks;
         table[index].CPU_total_ticks = p -> cpu_ticks_total;
-        safestrcpy(table[index].state, states[p-> state], STRMAX);       // not sure how to do this
+        safestrcpy(table[index].state, states[p-> state], STRMAX);      
         table[index].size = p -> sz;
-        safestrcpy(table[index].name, p-> name, STRMAX);          // check this as well
+        safestrcpy(table[index].name, p-> name, STRMAX);          
         index++; // after 
       }
     }

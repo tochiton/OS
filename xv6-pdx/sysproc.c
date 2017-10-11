@@ -120,12 +120,19 @@ sys_getppid(void){
 //  if(proc->pid < 2){       //check if we need this 
 //    return 0;             // check this..not sure what to return since uint    
 //  }
+  if(proc->parent)
+  return proc->pid;
   int parent_id = proc->parent->pid;
   return parent_id;
 }
 
 int 
-sys_setuid(uint uid){     //should I pass by reference or by value
+sys_setuid(void){     //should I pass by reference or by value
+int uid;
+if(argint(0, &uid) < 0)// remove this stub once you implement the date() system call.
+    return -1;
+
+
   if(uid <0 || uid > 32767){
     return -1;
   }
@@ -136,7 +143,12 @@ sys_setuid(uint uid){     //should I pass by reference or by value
 }
 
 int 
-sys_setgid(uint gid){
+sys_setgid(void){
+int gid;
+ if(argint(0, &gid) < 0)// remove this stub once you implement the date() system call.
+    return -1;
+
+
   if(gid <0 || gid > 32767){
     return -1;
   }

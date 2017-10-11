@@ -25,7 +25,7 @@ main(int argc, char *argv[])
 	wait();
 	int time_end = uptime();
 	int total_time = time_end - time_start;
-	printf(1, "%d\n",total_time);
+	printf(1, "%s ran in %d seconds\n",argv[1], total_time);
 	exit();
 }
 

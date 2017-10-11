@@ -16,8 +16,6 @@ main(void)
     printf(1,"%d\t%d\t%d\t%d\t%d\t%d\t%s\t%d\t%s\t\n", table[i].pid, table[i].uid,table[i].gid, table[i].ppid, table[i].elapsed_ticks, table[i].CPU_total_ticks, table[i].state, table[i].size, table[i].name );
   }
 
-//  printf(1,"number of processes %d\n", result);
-  printf(1, "Not imlpemented yet.\n");
   exit();
 }
 #endif
