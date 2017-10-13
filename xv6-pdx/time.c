@@ -4,7 +4,10 @@
 int
 main(int argc, char *argv[])
 {
-	// ++argv;
+	if(argc == 1){
+		printf(2, "ran in 0.00 seconds\n");
+		exit();
+	}
 	int time_start = uptime();
 	int pid = fork();
 
@@ -14,8 +17,6 @@ main(int argc, char *argv[])
 	}
 
 	if(pid == 0){
-		if(argc == 1)
-			exit(); 
 		++argv; 
 		if(exec(argv[0], argv)){
 			printf(2, "time failed: exec failed\n");
@@ -25,7 +26,9 @@ main(int argc, char *argv[])
 	wait();
 	int time_end = uptime();
 	int total_time = time_end - time_start;
-	printf(1, "%s ran in %d seconds\n",argv[1], total_time);
+	int seconds = total_time/100;
+	int finalTime = total_time % 100;
+	printf(1, "%s ran in %d.%d seconds\n",argv[1], seconds, finalTime);
 	exit();
 }
 

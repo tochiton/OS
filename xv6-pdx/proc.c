@@ -548,12 +548,15 @@ getprocs(uint max, struct uproc* table){
   struct proc *p;
   
     acquire(&ptable.lock);
-    for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
+    for(p = ptable.proc; p < &ptable.proc[NPROC] && index < max ; p++){
       if(p->state == RUNNABLE || p->state == SLEEPING || p->state == RUNNING){
         table[index].pid = p -> pid;
         table[index].uid = p -> uid;
         table[index].gid = p -> gid;
-        table[index].ppid = p -> parent -> pid;
+        if(p -> parent == 0)
+		      table[index].ppid = p->pid;
+	      else 	
+        	table[index].ppid = p -> parent -> pid;
         table[index].elapsed_ticks = ticks - p -> start_ticks;
         table[index].CPU_total_ticks = p -> cpu_ticks_total;
         safestrcpy(table[index].state, states[p-> state], STRMAX);      
