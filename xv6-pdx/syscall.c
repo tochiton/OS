@@ -137,7 +137,7 @@ static int (*syscalls[])(void) = {
 [SYS_getppid] sys_getppid,
 [SYS_setuid]  sys_setuid,
 [SYS_setgid]  sys_setgid,
-[SYS_getprocs]  sys_getprocs,
+[SYS_getprocs]sys_getprocs,
 };
 
 // put data structure for printing out system call invocation information here
@@ -170,6 +170,7 @@ static char* syscallnames[] = {
 "getppid",
 "setuid",
 "setgid",
+"getprocs",
 };
 #endif 
 void

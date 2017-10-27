@@ -19,7 +19,7 @@ main(int argc, char *argv[])
 	if(pid == 0){
 		++argv; 
 		if(exec(argv[0], argv)){
-			printf(2, "time failed: exec failed\n");
+			printf(2, "time failed: exec failed  - Invalid argument	\n");
 			exit();	
 		}  
 	}

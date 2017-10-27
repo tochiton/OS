@@ -117,7 +117,12 @@ void            userinit(void);
 int             wait(void);
 void            wakeup(void*);
 void            yield(void);
-int 		getprocs(uint max, struct uproc* table);
+int 			getprocs(uint max, struct uproc* table);
+void            printPidReadyList(void);
+void 			countFreeList(void);
+void			printPidSleepList(void);
+void			printZombieList(void);
+
 // swtch.S
 void            swtch(struct context**, struct context*);
 

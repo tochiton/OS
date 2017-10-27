@@ -117,9 +117,6 @@ sys_getgid(void){
 
 uint
 sys_getppid(void){
-//  if(proc->pid < 2){       //check if we need this 
-//    return 0;             // check this..not sure what to return since uint    
-//  }
   if(proc->parent)
   return proc->pid;
   int parent_id = proc->parent->pid;
@@ -127,34 +124,32 @@ sys_getppid(void){
 }
 
 int 
-sys_setuid(void){     //should I pass by reference or by value
+sys_setuid(void){     
 int uid;
-if(argint(0, &uid) < 0)// remove this stub once you implement the date() system call.
+if(argint(0, &uid) < 0)
     return -1;
-
 
   if(uid <0 || uid > 32767){
     return -1;
   }
-  //acquire(&ptable.lock);
   proc->uid = uid;
-  //release(&ptable.lock);
+
   return 0;
 }
 
 int 
 sys_setgid(void){
 int gid;
- if(argint(0, &gid) < 0)// remove this stub once you implement the date() system call.
+ if(argint(0, &gid) < 0)
     return -1;
 
 
   if(gid <0 || gid > 32767){
     return -1;
   }
-  //acquire(&ptable.lock);
+
   proc->gid = gid;
-  //release(&ptable.lock);
+
   return 0;
 }
 
@@ -163,7 +158,7 @@ sys_getprocs(void){
   struct uproc *d;
   int n;
   
-  if(argint(0, &n) < 0)// remove this stub once you implement the date() system call.
+  if(argint(0, &n) < 0)
     return -1;
 
   if(argptr(1,(void*)&d, sizeof(struct uproc)) < 0)

@@ -2,7 +2,7 @@
 #include "types.h"
 #include "user.h"
 #include "uproc.h"
-#define max 64    //number of processes
+#define max 72    //number of processes
 int
 main(void)
 {

@@ -7,7 +7,7 @@ Disassembly of section .text:
 00000000 <main>:
 #include "user.h"
 #include "uproc.h"
-#define max 64    //number of processes
+#define max 72    //number of processes
 int
 main(void)
 {
@@ -25,14 +25,14 @@ main(void)
 
   struct uproc* table = malloc(max * sizeof(struct uproc));
   14:	83 ec 0c             	sub    $0xc,%esp
-  17:	68 00 17 00 00       	push   $0x1700
+  17:	68 e0 19 00 00       	push   $0x19e0
   1c:	e8 1e 08 00 00       	call   83f <malloc>
   21:	83 c4 10             	add    $0x10,%esp
   24:	89 45 e0             	mov    %eax,-0x20(%ebp)
   int result = getprocs(max, table);              // system call
   27:	83 ec 08             	sub    $0x8,%esp
   2a:	ff 75 e0             	pushl  -0x20(%ebp)
-  2d:	6a 40                	push   $0x40
+  2d:	6a 48                	push   $0x48
   2f:	e8 59 04 00 00       	call   48d <getprocs>
   34:	83 c4 10             	add    $0x10,%esp
   37:	89 45 dc             	mov    %eax,-0x24(%ebp)
