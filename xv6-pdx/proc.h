@@ -33,7 +33,7 @@ extern struct proc *proc asm("%gs:4");     // cpus[cpunum()].proc
 // Saved registers for kernel context switches.
 // Don't need to save all the segment registers (%cs, etc),
 // because they are constant across kernel contexts.
-// Don't need to save %eax, %ecx, %edx, because the
+// Don't need to save %eax, %ecx, %edc unitx, because the
 // x86 convention is that the caller has saved them.
 // Contexts are stored at the bottom of the stack they
 // describe; the stack pointer is the address of the context.
@@ -66,6 +66,11 @@ struct proc {
   struct inode *cwd;           // Current directory
   char name[16];               // Process name (debugging)
   uint start_ticks;
+  uint uid;
+  uint gid;
+  uint cpu_ticks_total;
+  uint cpu_ticks_in;
+  struct proc * next;
 };
 
 // Process memory is laid out contiguously, low addresses first:

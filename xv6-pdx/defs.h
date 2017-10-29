@@ -8,7 +8,7 @@ struct rtcdate;
 struct spinlock;
 struct stat;
 struct superblock;
-
+struct uproc;
 // bio.c
 void            binit(void);
 struct buf*     bread(uint, uint);
@@ -117,6 +117,11 @@ void            userinit(void);
 int             wait(void);
 void            wakeup(void*);
 void            yield(void);
+int 			getprocs(uint max, struct uproc* table);
+void            printPidReadyList(void);
+void 			countFreeList(void);
+void			printPidSleepList(void);
+void			printZombieList(void);
 
 // swtch.S
 void            swtch(struct context**, struct context*);

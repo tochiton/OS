@@ -187,13 +187,30 @@ struct {
 void
 consoleintr(int (*getc)(void))
 {
-  int c, doprocdump = 0;
+  int c = 0; 
+  int doprocdump =0; 
+  int printPidList =0; 
+  int doPrintCount = 0; 
+  int doPrintSleepList =0; 
+  int doPrintZombieList = 0;
 
   acquire(&cons.lock);
   while((c = getc()) >= 0){
     switch(c){
     case C('P'):  // Process listing.
       doprocdump = 1;   // procdump() locks cons.lock indirectly; invoke later
+      break;
+    case C('R'):  // Process listing.
+      printPidList = 1;   
+      break;  
+    case C('F'):  // Process listing.
+      doPrintCount = 1;   
+      break; 
+    case C('S'):  // Process listing.
+      doPrintSleepList = 1;   
+      break;
+    case C('Z'):  // Process listing.
+      doPrintZombieList = 1;   
       break;
     case C('U'):  // Kill line.
       while(input.e != input.w &&
@@ -224,6 +241,18 @@ consoleintr(int (*getc)(void))
   release(&cons.lock);
   if(doprocdump) {
     procdump();  // now call procdump() wo. cons.lock held
+  }
+  if(printPidList){
+    printPidReadyList();
+  }
+   if(doPrintCount){
+    countFreeList();
+  }
+  if(doPrintSleepList){
+    printPidSleepList();
+  }
+  if(doPrintZombieList){
+    printZombieList();
   }
 }
 
