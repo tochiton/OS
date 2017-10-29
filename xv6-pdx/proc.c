@@ -35,6 +35,7 @@ int nextpid = 1;
 
 // template
 // helper functions 
+#ifdef CS333_P3P4
 static int
 removeFromStateList(struct proc** sList, struct proc * p);
 
@@ -56,6 +57,7 @@ insertTail(struct proc** sList, struct proc * p);  //adds at the end
 static void
 insertAtHead(struct proc** sList, struct proc * p);
 
+#endif
 
 extern void forkret(void);
 extern void trapret(void);
@@ -902,6 +904,7 @@ getprocs(uint max, struct uproc* table){
 
 // Project #3 helper functions 
 
+ #ifdef CS333_P3P4
 
 static void
 assertState(struct proc * p, enum procstate state){
@@ -1018,6 +1021,8 @@ insertAtHead(struct proc** sList, struct proc * p){
   *sList = p;
 }
 
+#endif
+
 void
 printPidReadyList(void){
    struct proc * current;
@@ -1073,7 +1078,6 @@ printZombieList(void){
     }
     release(&ptable.lock);
 }
-
 
 
 

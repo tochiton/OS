@@ -10980,9 +10980,9 @@ getprocs(uint max, struct uproc* table){
 801057c2:	c3                   	ret    
 
 801057c3 <assertState>:
-
 // Project #3 helper functions 
 
+ #ifdef CS333_P3P4
 
 static void
 assertState(struct proc * p, enum procstate state){
@@ -11365,6 +11365,8 @@ insertAtHead(struct proc** sList, struct proc * p){
 80105a65:	c3                   	ret    
 
 80105a66 <printPidReadyList>:
+
+#endif
 
 void
 printPidReadyList(void){
