@@ -92,3 +92,5 @@ testuidgid.c
 testlist.c
 testsleeplist.c
 testprocessdeath.c
+setpriority.c
+testSched.c

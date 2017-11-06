@@ -71,6 +71,8 @@ struct proc {
   uint cpu_ticks_total;
   uint cpu_ticks_in;
   struct proc * next;
+  int priority;
+  int budget;
 };
 
 // Process memory is laid out contiguously, low addresses first:

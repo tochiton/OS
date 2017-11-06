@@ -5,7 +5,7 @@
 void
 testSched(){
   int ret = 1;
-  for(int i = 0; i < 10 && ret != 0; ++i) 
+  for(int i = 0; i < 20 && ret != 0; ++i) 
   ret = fork();
 
   if(ret == 0)
@@ -23,7 +23,7 @@ testList(){
 int
 main(int argc, char *argv[])
 {
-  //testSched();
-  testList();
+  testSched();            // test round - robin
+  testList();             // test free list
   exit();
 }

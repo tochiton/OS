@@ -122,6 +122,7 @@ void            printPidReadyList(void);
 void 			countFreeList(void);
 void			printPidSleepList(void);
 void			printZombieList(void);
+int 			setpriority(int pid, int priority);
 
 // swtch.S
 void            swtch(struct context**, struct context*);
