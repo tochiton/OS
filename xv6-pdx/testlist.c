@@ -5,17 +5,22 @@
 void
 testSched(){
   int ret = 1;
-  for(int i = 0; i < 20 && ret != 0; ++i) 
+  int i;
+  for(i = 0; i < 10 && ret != 0; ++i) 
   ret = fork();
 
-  if(ret == 0)
+  if(ret == 0){
+      //sleep(100000);
     for(;;);
+  }
   exit();
 }
 //creates a process
 void
 testList(){
-  sleep(5000);
+  int process = fork();
+  if(process == 0)
+    sleep(50000);
   printf(1,"Finished sleeping for 5 seconds \n ");
   exit();
 }

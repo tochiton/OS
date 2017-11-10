@@ -1114,9 +1114,10 @@ printPidReadyList(void){
    acquire(&ptable.lock);
    cprintf("Ready List processes: \n");
    for(int i = 0; i <= MAX; i++){
+    cprintf("%d: ", i);
     current = ptable.pLists.ready[i];
     while(current){
-      cprintf("%d: (%d, %d) ->", i, current -> pid, current -> budget);
+      cprintf("(%d, %d) ->", current -> pid, current -> budget);
       current = current -> next;
     }
     cprintf("\n");

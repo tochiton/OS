@@ -140,7 +140,9 @@ static int (*syscalls[])(void) = {
 [SYS_setuid]  sys_setuid,
 [SYS_setgid]  sys_setgid,
 [SYS_getprocs]sys_getprocs,
+#ifdef CS333_P3P4
 [SYS_setpriority] sys_setpriority,
+#endif
 };
 
 // put data structure for printing out system call invocation information here
