@@ -9078,8 +9078,8 @@ found:
 801046cd:	00 00 00 
   p->budget = BUDGET;
 801046d0:	8b 45 f4             	mov    -0xc(%ebp),%eax
-801046d3:	c7 80 98 00 00 00 80 	movl   $0x2faf080,0x98(%eax)
-801046da:	f0 fa 02 
+801046d3:	c7 80 98 00 00 00 88 	movl   $0x1388,0x98(%eax)
+801046da:	13 00 00 
 
   return p;
 801046dd:	8b 45 f4             	mov    -0xc(%ebp),%eax
@@ -9143,7 +9143,7 @@ userinit(void)
 
   ptable.PromoteAtTime = ticks + TICKS_TO_PROMOTE;   //P4 initilize ticksToPromote
 80104750:	a1 00 79 11 80       	mov    0x80117900,%eax
-80104755:	05 80 f0 fa 02       	add    $0x2faf080,%eax
+80104755:	05 b8 0b 00 00       	add    $0xbb8,%eax
 8010475a:	a3 e4 70 11 80       	mov    %eax,0x801170e4
 
  for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
@@ -10082,7 +10082,7 @@ struct proc *p;
 80104fde:	77 61                	ja     80105041 <scheduler+0x92>
         ptable.PromoteAtTime = ticks + TICKS_TO_PROMOTE;
 80104fe0:	a1 00 79 11 80       	mov    0x80117900,%eax
-80104fe5:	05 80 f0 fa 02       	add    $0x2faf080,%eax
+80104fe5:	05 b8 0b 00 00       	add    $0xbb8,%eax
 80104fea:	a3 e4 70 11 80       	mov    %eax,0x801170e4
         for(int i =1; i <= MAX; i++){                  
 80104fef:	c7 45 f0 01 00 00 00 	movl   $0x1,-0x10(%ebp)
@@ -10369,8 +10369,8 @@ yield(void)
 801052dc:	7f 3d                	jg     8010531b <yield+0xd0>
       proc -> budget = BUDGET;
 801052de:	65 a1 04 00 00 00    	mov    %gs:0x4,%eax
-801052e4:	c7 80 98 00 00 00 80 	movl   $0x2faf080,0x98(%eax)
-801052eb:	f0 fa 02 
+801052e4:	c7 80 98 00 00 00 88 	movl   $0x1388,0x98(%eax)
+801052eb:	13 00 00 
       if(proc -> priority < MAX){
 801052ee:	65 a1 04 00 00 00    	mov    %gs:0x4,%eax
 801052f4:	8b 80 94 00 00 00    	mov    0x94(%eax),%eax
@@ -10544,8 +10544,8 @@ sleep(void *chan, struct spinlock *lk)
 8010547f:	7f 3d                	jg     801054be <sleep+0x110>
       proc -> budget = BUDGET;
 80105481:	65 a1 04 00 00 00    	mov    %gs:0x4,%eax
-80105487:	c7 80 98 00 00 00 80 	movl   $0x2faf080,0x98(%eax)
-8010548e:	f0 fa 02 
+80105487:	c7 80 98 00 00 00 88 	movl   $0x1388,0x98(%eax)
+8010548e:	13 00 00 
       if(proc -> priority < MAX){
 80105491:	65 a1 04 00 00 00    	mov    %gs:0x4,%eax
 80105497:	8b 80 94 00 00 00    	mov    0x94(%eax),%eax
@@ -12207,8 +12207,8 @@ updatePriority(struct proc** sList, int pid, int priority){
 801061cf:	89 90 94 00 00 00    	mov    %edx,0x94(%eax)
       current -> budget = BUDGET;
 801061d5:	8b 45 f4             	mov    -0xc(%ebp),%eax
-801061d8:	c7 80 98 00 00 00 80 	movl   $0x2faf080,0x98(%eax)
-801061df:	f0 fa 02 
+801061d8:	c7 80 98 00 00 00 88 	movl   $0x1388,0x98(%eax)
+801061df:	13 00 00 
       release(&ptable.lock);
 801061e2:	83 ec 0c             	sub    $0xc,%esp
 801061e5:	68 80 49 11 80       	push   $0x80114980

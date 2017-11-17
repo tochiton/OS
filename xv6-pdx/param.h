@@ -14,8 +14,8 @@
 #define FSSIZE       2000  // size of file system in blocks  // CS333 requires a larger FS.
 #define UID          0
 #define GID          0
-#define TICKS_TO_PROMOTE 50000000
+#define TICKS_TO_PROMOTE 3000
 #define MAX   			6
-#define BUDGET 			50000000	
+#define BUDGET 			5000	
 
 

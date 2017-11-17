@@ -6,7 +6,7 @@ main(int argc, char *argv[])
 {
   int pid = atoi(argv[1]);	
   int priority = atoi(argv[2]);	
-  printf(1,"testing setting priority %d...%d\n", pid, priority);
+  //printf(1,"testing setting priority %d...%d\n", pid, priority);
   int rc = setpriority(pid, priority);
   if(rc == -1){
   	printf(1, "Invalid argument\n");
