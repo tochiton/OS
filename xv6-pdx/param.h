@@ -12,10 +12,11 @@
 #define NBUF         (MAXOPBLOCKS*3)  // size of disk block cache
 // #define FSSIZE       1000  // size of file system in blocks
 #define FSSIZE       2000  // size of file system in blocks  // CS333 requires a larger FS.
-#define UID          0
+#define UID          0     // The default value of uid and gid are both for the first process and files created by the mkfs when the file system is created
 #define GID          0
 #define TICKS_TO_PROMOTE 3000
 #define MAX   			6
 #define BUDGET 			5000	
+#define MODE 		0755
 
 

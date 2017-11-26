@@ -21,6 +21,11 @@ struct inode {
   short minor;
   short nlink;
   uint size;
+#ifdef CS333_P5
+  ushort uid;            // owner ID
+  ushort gid;            // group ID
+  union mode_t mode;     // protection/mode bits
+#endif
   uint addrs[NDIRECT+1];
 };
 #define I_BUSY 0x1

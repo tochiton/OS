@@ -107,6 +107,9 @@ extern int sys_setuid(void);
 extern int sys_setgid(void);
 extern int sys_getprocs(void);
 extern int sys_setpriority(void);
+extern int sys_chmod(void);
+extern int sys_chown(void);
+extern int sys_chgrp(void);
 
 
 
@@ -143,6 +146,11 @@ static int (*syscalls[])(void) = {
 #ifdef CS333_P3P4
 [SYS_setpriority] sys_setpriority,
 #endif
+#ifdef CS333_P5
+[SYS_chmod] sys_chmod,
+[SYS_chown] sys_chown,
+[SYS_chgrp] sys_chgrp,
+#endif
 };
 
 // put data structure for printing out system call invocation information here
@@ -177,6 +185,9 @@ static char* syscallnames[] = {
 "setgid",
 "getprocs",
 "setpriority",
+"chmod",
+"chown",
+"chgrp",
 };
 #endif 
 void
