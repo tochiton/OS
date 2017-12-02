@@ -439,3 +439,46 @@ sys_pipe(void)
   fd[1] = fd1;
   return 0;
 }
+
+int 
+sys_chmod(){
+  char *pathname;
+  int mode;
+  // double check what you fetch from the stack
+  if(argstr(0, &pathname) < 0 || argint(1, (int*)&mode) < 0){
+    return -1;
+  }
+  if(0 > mode || mode > 1023){
+    return -1;
+  }
+  //cprintf("%s %d\n", pathname, mode);
+  return chmod(pathname, mode);
+}
+
+int 
+sys_chown(){
+  char *pathname;
+  int owner;
+  // double check what you fetch from the stack
+  if(argstr(0, &pathname) < 0 || argint(1, (int*)&owner) < 0){
+    return -1;
+  }
+  if(owner < 0 || owner > 32767){
+    return -1;
+  }
+  return chown(pathname, owner);
+}
+
+int 
+sys_chgrp(){
+  char *pathname;
+  int group;
+  // double check what you fetch from the stack
+  if(argstr(0, &pathname) < 0 || argint(1, (int*)&group) < 0){
+    return -1;
+  }
+  if(group < 0 || group > 32767){
+    return -1;
+  }
+  return chgrp(pathname, group);
+}

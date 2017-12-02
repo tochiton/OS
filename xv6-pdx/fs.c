@@ -185,6 +185,11 @@ ialloc(uint dev, short type)
     if(dip->type == 0){  // a free inode
       memset(dip, 0, sizeof(*dip));
       dip->type = type;
+
+      dip->uid = UID;
+      dip->gid = GID;
+      dip->mode.asInt = MODE;
+
       log_write(bp);   // mark it allocated on the disk
       brelse(bp);
       return iget(dev, inum);
@@ -206,6 +211,12 @@ iupdate(struct inode *ip)
   dip->type = ip->type;
   dip->major = ip->major;
   dip->minor = ip->minor;
+
+  //add flag
+  dip->uid = ip->uid;
+  dip->gid = ip->gid;
+  dip->mode.asInt = ip->mode.asInt;
+
   dip->nlink = ip->nlink;
   dip->size = ip->size;
   memmove(dip->addrs, ip->addrs, sizeof(ip->addrs));
@@ -285,6 +296,11 @@ ilock(struct inode *ip)
     ip->minor = dip->minor;
     ip->nlink = dip->nlink;
     ip->size = dip->size;
+
+    ip->uid = dip->uid;
+    ip->gid = dip->gid;
+    ip->mode.asInt = dip->mode.asInt;
+
     memmove(ip->addrs, dip->addrs, sizeof(ip->addrs));
     brelse(bp);
     ip->flags |= I_VALID;
@@ -425,6 +441,11 @@ stati(struct inode *ip, struct stat *st)
   st->type = ip->type;
   st->nlink = ip->nlink;
   st->size = ip->size;
+
+  st->uid = ip->uid;
+  st->gid = ip->gid;
+  st->mode.asInt = ip->mode.asInt;
+  
 }
 
 // Read data from inode.
@@ -643,3 +664,65 @@ nameiparent(char *path, char *name)
 {
   return namex(path, 1, name);
 }
+
+#ifdef CS333_P5
+int 
+chmod(char *pathname, int mode){
+  //cprintf("hello");
+  //cprintf("%d", mode);
+  begin_op();
+  struct inode* ip = namei(pathname);
+
+  if(ip != 0){
+    ilock(ip);
+    ip -> mode.asInt = mode;
+    //cprintf("%d", ip->mode.asInt);
+    iupdate(ip);
+    iunlock(ip);
+    end_op();
+    return 0;
+  }else{
+    end_op();
+    return -1;
+  }
+}
+
+int chown(char *pathname, int owner){
+  if(owner < 0 || owner > 32767){
+    return -1;
+  }
+  begin_op();
+  struct inode* ip = namei(pathname);
+  if(ip != 0){
+    ilock(ip);
+    ip -> uid = owner;
+    iupdate(ip);
+    iunlock(ip);
+    end_op();
+    return 0;
+  }else{
+    end_op();
+    return -1;
+  }
+}
+
+int chgrp(char *pathname, int group){
+  if(group < 0 || group > 32767){
+    return -1;
+  }
+  begin_op();
+  struct inode* ip = namei(pathname);
+  if(ip != 0){
+    ilock(ip);
+    ip -> gid = group;
+    iupdate(ip);
+    iunlock(ip);
+    end_op();
+    return 0;
+  }else{
+    end_op();
+    return -1;
+  }
+}
+
+#endif

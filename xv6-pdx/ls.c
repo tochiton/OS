@@ -2,6 +2,9 @@
 #include "stat.h"
 #include "user.h"
 #include "fs.h"
+#ifdef CS333_P5
+#include "print_mode.c"
+#endif
 
 char*
 fmtname(char *path)
@@ -43,7 +46,8 @@ ls(char *path)
   
   switch(st.type){
   case T_FILE:
-    printf(1, "%s %d %d %d\n", fmtname(path), st.type, st.ino, st.size);
+    print_mode(&st);
+    printf(1, "%s %d %d %d %d\n", fmtname(path), st.uid, st.gid, st.ino, st.size);
     break;
   
   case T_DIR:
@@ -63,7 +67,8 @@ ls(char *path)
         printf(1, "ls: cannot stat %s\n", buf);
         continue;
       }
-      printf(1, "%s %d %d %d\n", fmtname(buf), st.type, st.ino, st.size);
+      print_mode(&st);
+      printf(1, "%s %d %d %d %d\n", fmtname(buf), st.uid, st.gid, st.ino, st.size);
     }
     break;
   }
@@ -74,7 +79,8 @@ int
 main(int argc, char *argv[])
 {
   int i;
-
+  // print header before..
+  printf(1, "mode\tname\tuid\tgid\tinode\tsize\n");
   if(argc < 2){
     ls(".");
     exit();

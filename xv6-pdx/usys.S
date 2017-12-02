@@ -37,3 +37,8 @@ SYSCALL(getppid)
 SYSCALL(setuid)
 SYSCALL(setgid)
 SYSCALL(getprocs)
+SYSCALL(setpriority)
+SYSCALL(chmod)
+SYSCALL(chown)
+SYSCALL(chgrp)
+

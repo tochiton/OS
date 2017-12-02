@@ -89,6 +89,8 @@ p5-test.c
 p5-test.h
 testsetuid.c
 testuidgid.c
-testlist.c
+test.c
 testsleeplist.c
 testprocessdeath.c
+setpriority.c
+testSched.c
